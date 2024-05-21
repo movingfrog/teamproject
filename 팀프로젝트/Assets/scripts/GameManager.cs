@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    
     public void Die()
     {
         Respawn();

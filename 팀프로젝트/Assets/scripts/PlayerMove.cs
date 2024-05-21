@@ -8,10 +8,16 @@ public class PlayerMove : MonoBehaviour
 {
    public GameManager gameManager;
 
+    public float currentSpeed;
     public float moveSpeed;
     public float runSpeed;
     private Vector3 Movevelocity = Vector3.zero;
     CapsuleCollider2D cp;
+
+    private void Start()
+    {
+        currentSpeed = moveSpeed;
+    }
 
     private void Awake()
     {
@@ -30,9 +36,15 @@ public class PlayerMove : MonoBehaviour
 
         Movevelocity = new Vector3(x, y, 0) * moveSpeed *Time.deltaTime;
         transform.position += Movevelocity;
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed = runSpeed;
         }
+        else
+        {
+            moveSpeed = currentSpeed;
+        }
+        
     }
 }
