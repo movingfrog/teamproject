@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
+{ 
     public int maxHealth = 100;
     private int currentHealth;
-    public Vector3 respawnPosion = new Vector3(0, 0, 0);
+    public Vector3 respawnPosition = new Vector3(0, 0, 0);
 
     void Start()
     {
@@ -15,10 +16,13 @@ public class GameManager : MonoBehaviour
 
     public void Damaged(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (gameObject.tag == "Enemy")
         {
-            Die();
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
         }
     }
 
@@ -29,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Respawn()
     {
-        transform.position = respawnPosion;
+        transform.position = respawnPosition;
         currentHealth = maxHealth;
     }
 }

@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
    public GameManager gameManager;
 
     public float moveSpeed;
+    public float runSpeed;
     private Vector3 Movevelocity = Vector3.zero;
     CapsuleCollider2D cp;
 
@@ -29,5 +30,9 @@ public class PlayerMove : MonoBehaviour
 
         Movevelocity = new Vector3(x, y, 0) * moveSpeed *Time.deltaTime;
         transform.position += Movevelocity;
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed = runSpeed;
+        }
     }
 }
