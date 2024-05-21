@@ -6,9 +6,16 @@ using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
-   
+   public GameManager gameManager;
+
     public float moveSpeed;
     private Vector3 Movevelocity = Vector3.zero;
+    CapsuleCollider2D cp;
+
+    private void Awake()
+    {
+        cp = GetComponent<CapsuleCollider2D>();        
+    }
 
     void Update()
     {
@@ -21,6 +28,6 @@ public class PlayerMove : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical"); // 상하 이동
 
         Movevelocity = new Vector3(x, y, 0) * moveSpeed *Time.deltaTime;
-        this.transform.position += Movevelocity;
+        transform.position += Movevelocity;
     }
 }
