@@ -8,8 +8,9 @@ public class PlayerMove : MonoBehaviour
 {
    public GameManager gameManager;
 
-    public float currentSpeed;
+    private bool isInRange = false;
     public float moveSpeed;
+    public float currentSpeed;
     public float runSpeed;
     private Vector3 Movevelocity = Vector3.zero;
     CapsuleCollider2D cp;
@@ -45,6 +46,7 @@ public class PlayerMove : MonoBehaviour
         {
             moveSpeed = currentSpeed;
         }
-        
     }
+
+    
 }

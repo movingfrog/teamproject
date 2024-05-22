@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 Movevel =  Vector3.zero;
+    private CapsuleCollider2D cp;
+    public float enemySpeed;
+    public int range;
+    private int NextMove;
+
+    private void Awake()
     {
-        
+        cp = GetComponent<CapsuleCollider2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+       
     }
 }
