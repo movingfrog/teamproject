@@ -14,9 +14,17 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Damaged();
+        }
+    }
+
     public void Damaged()
     {
-        if (gameObject.tag == "Enemy")
+        if (currentHealth > 0)
         {
             currentHealth -= damage;
             if (currentHealth <= 0)

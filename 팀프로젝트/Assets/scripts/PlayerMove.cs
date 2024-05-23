@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class PlayerMove : MonoBehaviour
 {
-   public GameManager gameManager;
-
     private bool isInRange = false;
     public float moveSpeed;
     public float currentSpeed;

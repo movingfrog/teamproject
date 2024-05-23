@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
@@ -26,17 +27,11 @@ public class EnemyMove : MonoBehaviour
 
     private void Update()
     {
-        float distanceTotarget = Vector2.Distance(transform.position, target.position);
-
-        if (distanceTotarget <= range && distanceTotarget > stopDistance)
+       if (Vector2.Distance(transform.position, target.position) > stopDistance )
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, enemySpeed * Time.deltaTime);
-           
         }
     }
 
-   private void Idle()
-    {
-
-    }
+    
 }
