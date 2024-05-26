@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private bool isInRange = false;
     public float moveSpeed;
     public float currentSpeed;
     public float runSpeed;
