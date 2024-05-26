@@ -15,14 +15,16 @@ public class EnemyMove : MonoBehaviour
 
     private Transform target;
 
-    private void Start()
-    {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-    }
-
     private void Awake()
     {
         cp = GetComponent<CapsuleCollider2D>();
+
+
+    }
+
+    private void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     private void Update()
@@ -33,5 +35,20 @@ public class EnemyMove : MonoBehaviour
         }
     }
 
-    
+    private void enemyMove()
+    {
+
+    }
+
+    private void Think()
+    {
+        // Next Move
+        NextMove = Random.Range(-1, 2);
+
+        //Idle
+        if (NextMove == 0)
+        {
+           
+        }
+    }
 }
