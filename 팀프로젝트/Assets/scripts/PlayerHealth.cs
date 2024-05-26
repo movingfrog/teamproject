@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int damage;
-    public int maxHealth = 100;
-    private int currentHealth;
+    public int maxHealth;
+    public int currentHealth;
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
 
     void Start()
