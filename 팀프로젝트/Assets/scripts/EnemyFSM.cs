@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class EnemyFSM : MonoBehaviour
 {
-    public float enemycurrentSpeed = 0.8f;
-    public float enemychaseSpeed = 3f;
-    public float chaseRange = 8f;
-    public float attackRange = 0.5f;
-    public float changeDirection = 1.2f;
+    public float enemycurrentSpeed;
+    public float enemychaseSpeed;
+    public float chaseRange;
+    public float attackRange;
+    public float changeDir = 1.2f;
 
     private Transform target;
     private Rigidbody2D rb;
-    private Vector2 moveDirection;
+    private Vector2 moveDir;
     private float ChangeTime;
 
     private enum State
@@ -31,7 +31,7 @@ public class EnemyFSM : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = State.IDLE;
-        ChangeTime = changeDirection;
+        ChangeTime = changeDir;
         ChangeDirection();
     }
 
@@ -42,7 +42,7 @@ public class EnemyFSM : MonoBehaviour
         if (ChangeTime <= 0)
         {
             ChangeDirection();
-            ChangeTime = changeDirection;
+            ChangeTime = changeDir;
         }
 
         switch (currentState)
@@ -58,7 +58,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void Idle()
     {
-        rb.velocity = moveDirection * enemycurrentSpeed;
+        rb.velocity = moveDir * enemycurrentSpeed;
 
         if (Vector2.Distance(transform.position, target.position) <= chaseRange)
         {
@@ -78,35 +78,36 @@ public class EnemyFSM : MonoBehaviour
         rb.velocity = direction * enemychaseSpeed;
     }
 
+   
 
     private void ChangeDirection()
     {
-        int randomDirection = Random.Range(0, 8);
-        switch (randomDirection)
+        int randomDir = Random.Range(0, 8);
+        switch (randomDir)
         {
             case 0:
-                moveDirection = Vector2.up; // Move Up
+                moveDir = Vector2.up; // Move Up
                 break;
             case 1:
-                moveDirection = Vector2.down; // Move Down
+                moveDir = Vector2.down; // Move Down
                 break;
             case 2:
-                moveDirection = Vector2.left; // Move Left
+                moveDir  = Vector2.left; // Move Left
                 break;
             case 3:
-                moveDirection = Vector2.right; // Move Right
+                moveDir = Vector2.right; // Move Right
                 break;
             case 4:
-                moveDirection = new Vector2(1, 1).normalized; // Diagonal Top Right
+                moveDir  = new Vector2(1, 1).normalized; // Diagonal Top Right
                 break;
             case 5:
-                moveDirection = new Vector2(-1, 1).normalized; // Diagonal Top Left
+                moveDir = new Vector2(-1, 1).normalized; // Diagonal Top Left
                 break;
             case 6:
-                moveDirection = new Vector2(1, -1).normalized; // Diagonal Down Right
+                moveDir = new Vector2(1, -1).normalized; // Diagonal Down Right
                 break;
             case 7:
-                moveDirection = new Vector2(-1, -1).normalized; // Diagonal Down Left
+                moveDir = new Vector2(-1, -1).normalized; // Diagonal Down Left
                 break;
         }
     }

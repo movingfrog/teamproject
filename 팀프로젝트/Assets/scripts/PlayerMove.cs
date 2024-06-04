@@ -10,6 +10,8 @@ public class PlayerMove : MonoBehaviour
     public float runSpeed;
     private Vector3 Movevelocity = Vector3.zero;
     CapsuleCollider2D cp;
+    Rigidbody2D rb;
+
 
     private void Start()
     {
@@ -18,7 +20,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        cp = GetComponent<CapsuleCollider2D>();        
+        rb = GetComponent<Rigidbody2D>();
+        cp = GetComponent<CapsuleCollider2D>();
+      
     }
 
     void Update()
@@ -31,7 +35,7 @@ public class PlayerMove : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal"); // 좌우 이동
         float y = Input.GetAxisRaw("Vertical"); // 상하 이동
 
-        Movevelocity = new Vector3(x, y, 0) * moveSpeed *Time.deltaTime;
+        Movevelocity = new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
         transform.position += Movevelocity;
         
         if (Input.GetKey(KeyCode.LeftShift))
@@ -44,5 +48,5 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    
+   
 }
