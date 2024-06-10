@@ -11,6 +11,9 @@ public class PlayerMove : MonoBehaviour
     private Vector3 Movevelocity = Vector3.zero;
     CapsuleCollider2D cp;
     Rigidbody2D rb;
+    public float curTime;
+    public int AttackDamege = 5;
+    public float AttackcoolTime = 0.5f;
 
 
     private void Start()
@@ -47,6 +50,4 @@ public class PlayerMove : MonoBehaviour
             moveSpeed = currentSpeed;
         }
     }
-
-   
 }
