@@ -10,7 +10,7 @@ public class EnemyFSM : MonoBehaviour
     public float attackRange;
     public float changeDir = 1.2f;
 
-    private Transform target;
+    Transform target;
     private Rigidbody2D rb;
     private Vector2 moveDir;
     private float ChangeTime;
