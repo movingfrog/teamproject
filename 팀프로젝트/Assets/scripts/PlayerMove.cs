@@ -19,12 +19,14 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         currentSpeed = moveSpeed;
+        gameObject.GetComponent<PlayerMove>().enabled = false;    
     }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cp = GetComponent<CapsuleCollider2D>();
+        Debug.Log("0_0");
       
     }
 
