@@ -1,84 +1,181 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 
-public enum ItemName
+public class ItemSlot
 {
-    kit,
-    gear,
+    public itemData item;
+    public int quantity;
 }
 
 public class Inventory : MonoBehaviour
 {
-    public GameObject UI;
-    public GameObject[] UIs;
-    public Text[] texts;
-    private bool isTap = false;
-    private ItemName IN;
+    //public ItemSlotUI[] uidSlot;
+    public ItemSlotUI[] uidSlot;
+    public ItemSlot[] slots;
+
+    public GameObject inventoryWindow;
+    public Transform dropPosition;
+
+    [Header("Selected Item")]
+    private ItemSlot selectedItem;
+    private int selectedItemIndex;
+    public Text selectedItemName;
+    public Text selectedItemDescription;
+    public Text selectedItemStatName;
+    public Text selectedItemStatValue;
+    public GameObject useButton;
+    public GameObject equipButton;
+    public GameObject unEquipButton;
+    public GameObject dropButton;
+
+    private int curEquipIndex;
+
+    [Header("Events")]
+    public UnityEvent onOpenInventory;
+    public UnityEvent onCloseInventory;
+
+    public static Inventory instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
-        for (int i = 0; i < texts.Length; i++)
-            texts[i].text = " ";
+        inventoryWindow.SetActive(false);
+        slots = new ItemSlot[uidSlot.Length];
+
+        for (int i = 0; i < uidSlot.Length; i++)
+        {
+            //UI slot 초기화 하기
+            slots[i] = new ItemSlot();
+            uidSlot[i].index = i;
+            uidSlot[i].Clear();
+        }
+
+        ClearSelctedItemWindow();
     }
 
-    void Update()
+    public void OnInventoryButton(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        //인벤토리 키는 Key 이벤트
+        if(context.phase == InputActionPhase.Started)
         {
-            if (!isTap)
+            Toggle();
+        }
+    }
+
+    public void Toggle()
+    {
+        if (inventoryWindow.activeInHierarchy)
+        {
+            inventoryWindow.SetActive(false);
+            onCloseInventory?.Invoke();
+        }
+        else
+        {
+            inventoryWindow.SetActive(true);
+            onOpenInventory?.Invoke();
+        }
+    }
+
+    public bool IsOpen()
+    {
+        return inventoryWindow.activeInHierarchy;
+    }
+
+    public void AddItem(itemData item)
+    {
+        if(item.canStack)
+        {
+            //쌓일 수 있는 아이템일 경우 스택을 쌓아준다
+            ItemSlot slotToStackTo = GetItemStack(item);
+            if(slotToStackTo != null)
             {
-                if (PlayerItemContact.kits > 0)
-                    texts[0].text = PlayerItemContact.kits.ToString();
-                if(PlayerItemContact.gears > 0)
-                    texts[1].text = PlayerItemContact.gears.ToString();
-                    
-                isTap = true;
-                UI.SetActive(true);
-                Time.timeScale = 0;
+                slotToStackTo.quantity++;
+                UpdateUI();
+                return;
             }
+        }
+
+        //없을 경우 빈칸에 아이템을 추가해준다
+        ItemSlot emptySlot = GetEmptySlot();
+
+        if(emptySlot != null)
+        {
+            emptySlot.item = item;
+            emptySlot.quantity = 1;
+            UpdateUI();
+            return;
+        }
+
+        //인벤토리에 빈칸이 업슬 경우 획득한 아이템 다시 버리기
+        ThrowItem(item);
+    }
+
+    private void ThrowItem(itemData item)
+    {
+        //아이템 버리기
+        Instiate(item.dropPerfab, dropPosition.position);
+    }
+
+    void UpdateUI()
+    {
+        //slots에 있는 아이템 데이터를 UI의 Slot 최신화 하기
+        for (int i = 0;i<slots.Length;i++)
+        {
+            if (slots[i] != null)
+                uidSlot[i].Set(slots[i]);
             else
-            {
-                isTap = false;
-                UI.SetActive(false);
-                Time.timeScale = 1.0f;
-            }
+                uidSlot[i].Clear();
         }
     }
 
-    public void use()
+    ItemSlot GetItemStack(itemData item)
     {
-        switch (IN)
+        //현재 선택한 아이템이 이미 슬롯에 있고, 아직 최대수량을 안 넘겼다면 해당 아이템이 위치한 슬로의 위치를 가져온다
+        for(int i = 0;i<slots.Length; i++)
         {
-            case ItemName.kit:
-                if(PlayerItemContact.kits>0){
-                    PlayerItemContact.kits--;
-                    PlayerStats.HP += 50;
-                    if (PlayerStats.HP > 100)
-                        PlayerStats.HP = 100;
-                    texts[0].text = PlayerItemContact.kits.ToString();
-                    Debug.Log(PlayerStats.HP);
-                    if (PlayerItemContact.kits >= 0)
-                        texts[0].text = " ";
-                }
-                break;
-            default:
-                Debug.LogError("선택하지 않았습니다");
-                break;
+            if (slots[i].item == item&& slots[i].quantity < item.maxStackAmount)
+                return slots[i];
         }
     }
-    public void gear()
+
+    ItemSlot GetEmptySlot()
     {
-        for(int i = 0; i < UIs.Length; i++)
+        //빈 슬롯 찾기
+        for(int i = 0; i < slots.Length; i++)
         {
-            UIs[i].gameObject.SetActive(false);
+            if (slots[i].item == null)
+                return slots[i];
         }
-        IN = ItemName.gear;
+
+        return null;
     }
-    public void kit()
+
+    public void SelectItem(int index)
     {
-        for( int i = 0;i < UIs.Length;i++)
-            UIs[i].gameObject.SetActive(true);
-        IN = ItemName.kit;
+        //선택한 슬롯에 아이템이 없을 경우 return
+        if (slots[index].item == null)
+            return;
+
+        //선택한 아이템 정보 가져오기
+        selectedItem = slots[index];
+        selectedItemIndex = index;
+
+        selectedItemName.text = selectedItem.item.displayName;
+        selectedItemDescription.text = selectedItem.item.description;
+        selectedItemStatName.text = string.Empty;
+        selectedItemStatValue.text = string.Empty;
+
+        for(int i = 0; i < selectedItem.item.consumables.Length; i++)
+        {
+
+        }
     }
 }
