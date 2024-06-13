@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &413336288
 Transform:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 699135308}
   - component: {fileID: 699135314}
   - component: {fileID: 699135315}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 699135307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.37, y: 0, z: 0}
+  m_LocalPosition: {x: 6.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 1100821221}
   - component: {fileID: 1100821228}
   - component: {fileID: 1100821229}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -429,7 +429,6 @@ MonoBehaviour:
   currentSpeed: 0
   runSpeed: 8
   curTime: 0
-  AttackDamege: 5
   AttackcoolTime: 0.5
 --- !u!212 &1100821222
 SpriteRenderer:
@@ -516,6 +515,7 @@ MonoBehaviour:
   currentHealth: 0
   knockbackForce: 10
   knockbackDuration: 0.2
+  invincibilityDuration: 1.5
 --- !u!61 &1100821228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ GameObject:
   - component: {fileID: 1979628920}
   - component: {fileID: 1979628918}
   - component: {fileID: 1979628925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ExplosionEnemy
   m_TagString: ExplosionEnemy
   m_Icon: {fileID: 0}

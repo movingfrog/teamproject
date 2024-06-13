@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
     private Vector3 Movevelocity = Vector3.zero;
     public float curTime;
     public float AttackcoolTime = 0.5f;
+    private int enemyLayer;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerMove : MonoBehaviour
         Bc = AttackRange.GetComponent<BoxCollider2D>();
         Bc.isTrigger = true;
         AttackRange.SetActive(false);
+        enemyLayer = LayerMask.NameToLayer("Enemy");
     }
 
     void Update()
@@ -70,11 +72,11 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == enemyLayer)
         {
             EnemyHealth enemyHp = collision.GetComponent<EnemyHealth>();
             if (enemyHp != null)
-            {
+            { 
                 enemyHp.Damage(AttackDamage);
             }
         }
