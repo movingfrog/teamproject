@@ -2,39 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerMove : MonoBehaviour
 {
+    GameObject AttackRange;
+    BoxCollider2D Bc;
+    Rigidbody2D rb;
+
+    public float AttackDamage = 5f;
+    private float attackDelay = 0.4f;
+    private bool isAttacking = false;
     public float moveSpeed;
     public float currentSpeed;
     public float runSpeed;
-    private Vector3 Movevelocity = Vector3.zero;
-    CapsuleCollider2D cp;
-    Rigidbody2D rb;
-    public float curTime;
-    public int AttackDamege = 5;
-    public float AttackcoolTime = 0.5f;
 
+    private Vector3 Movevelocity = Vector3.zero;
+    public float curTime;
+    public float AttackcoolTime = 0.5f;
 
     private void Start()
     {
         currentSpeed = moveSpeed;
-        gameObject.GetComponent<PlayerMove>().enabled = false;    
-    }
-
-    private void Awake()
-    {
         rb = GetComponent<Rigidbody2D>();
-        cp = GetComponent<CapsuleCollider2D>();
-        Debug.Log("0_0");
-      
+        AttackRange = transform.GetChild(0).gameObject;
+        Bc = AttackRange.GetComponent<BoxCollider2D>();
+        Bc.isTrigger = true;
+        AttackRange.SetActive(false);
     }
 
     void Update()
     {
         Move();
+
+        if (Input.GetKey(KeyCode.F) && !isAttacking)
+        {
+            StartCoroutine(AttackCoroutine());
+        }
     }
 
+    // Move
     void Move()
     {
         float x = Input.GetAxisRaw("Horizontal"); // ÁÂ¿ì ÀÌµ¿
@@ -42,7 +47,7 @@ public class PlayerMove : MonoBehaviour
 
         Movevelocity = new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
         transform.position += Movevelocity;
-        
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed = runSpeed;
@@ -50,6 +55,28 @@ public class PlayerMove : MonoBehaviour
         else
         {
             moveSpeed = currentSpeed;
+        }
+    }
+
+    // Attack
+    private IEnumerator AttackCoroutine()
+    {
+        isAttacking = true;
+        AttackRange.SetActive(true);
+        yield return new WaitForSeconds(attackDelay);
+        AttackRange.SetActive(false);
+        isAttacking = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            EnemyHealth enemyHp = collision.GetComponent<EnemyHealth>();
+            if (enemyHp != null)
+            {
+                enemyHp.Damage(AttackDamage);
+            }
         }
     }
 }

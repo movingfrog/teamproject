@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
 
     // Knockback
-    public float knockbackForce = 5f;
+    public float knockbackForce = 2.5f;
     public float knockbackDuration = 0.2f;
     private bool isKnockback = false;
 
@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !isKnockback)
         {
             Damaged();
             Vector2 knockbackDir = (transform.position - collision.transform.position).normalized;
