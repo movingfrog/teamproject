@@ -19,22 +19,23 @@ public class PlayerMoving : MonoBehaviour
     {
         Move();
     }
-    private void Update()
-    {
-        Jump();
-    }
+    //private void Update()
+    //{
+    //    Jump();
+    //}
 
     public void Move()
     {
         float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
 
-        transform.Translate((new Vector3(h, 0, 0) * maxSpeed) * Time.deltaTime);
+        transform.Translate((new Vector3(h, v, 0) * maxSpeed) * Time.deltaTime);
     }
-    public void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            rigid.AddForce(Vector3.up*jump, ForceMode2D.Impulse);
-        }
-    }
+    //public void Jump()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+    //    {
+    //        rigid.AddForce(Vector3.up*jump, ForceMode2D.Impulse);
+    //    }
+    //}
 }
