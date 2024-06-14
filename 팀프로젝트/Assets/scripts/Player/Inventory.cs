@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 
 
 public class ItemSlot
@@ -40,6 +39,8 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    public bool IsOnInventory = false;
+
     private void Awake()
     {
         instance = this;
@@ -58,7 +59,7 @@ public class Inventory : MonoBehaviour
             uidSlot[i].Clear();
         }
 
-        ClearSelctedItemWindow();
+        ClearSelectItemWindow();
     }
 
     public void OnInventoryButton(InputAction.CallbackContext context)
@@ -121,7 +122,7 @@ public class Inventory : MonoBehaviour
     private void ThrowItem(itemData item)
     {
         //아이템 버리기
-        Instiate(item.dropPerfab, dropPosition.position);
+        Instantiate(item.dropPerfab, dropPosition.position, Quaternion.Euler(Vector3.zero));
     }
 
     void UpdateUI()
@@ -144,6 +145,8 @@ public class Inventory : MonoBehaviour
             if (slots[i].item == item&& slots[i].quantity < item.maxStackAmount)
                 return slots[i];
         }
+
+        return null;
     }
 
     ItemSlot GetEmptySlot()
@@ -175,7 +178,112 @@ public class Inventory : MonoBehaviour
 
         for(int i = 0; i < selectedItem.item.consumables.Length; i++)
         {
-
+            //먹을 수 있는 아이템일 경우 채워주는 체력을 UI 상에 표시해주기 위한 코드
+            selectedItemStatName.text += selectedItem.item.consumables[i].tyep.ToString() + "\n";
+            selectedItemStatValue.text += selectedItem.item.consumables[i].value.ToString() + "\n";
         }
+
+        //아이템 타입을 체크하여 버튼을 활성화
+        useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
+        equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !uidSlot[index].equipped);
+        unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && uidSlot[index].equipped);
+        dropButton.SetActive(true);
+    }
+
+    private void ClearSelectItemWindow()
+    {
+        //아이템 초기화
+        selectedItem = null;
+        selectedItemName.text = string.Empty;
+        selectedItemDescription.text = string.Empty;
+        selectedItemStatName.text= string.Empty;
+        selectedItemStatValue.text= string.Empty;
+
+        useButton.SetActive(false);
+        equipButton.SetActive(false);
+        unEquipButton.SetActive(false);
+        dropButton.SetActive(false);
+    }
+
+    public void OnUseButton()
+    {
+        //아이템타입이 사용 가능할 경우
+        if(selectedItem.item.type == ItemType.Consumable)
+        {
+            for (int i = 0; i< selectedItem.item.consumables.Length; i++)
+            {
+                switch (selectedItem.item.consumables[i].tyep)
+                {
+                    //consumable 타입에 따라 Heal과 Eat
+                    case ConsumableType.Health:
+                        break;
+                }
+            }
+        }
+        //사용한 아이템 없애기
+        RemoveSelectedItem();
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (!IsOnInventory)
+            {
+                IsOnInventory = true;
+                Time.timeScale = 0;
+                inventoryWindow.SetActive(true);
+            }
+            else
+            {
+                IsOnInventory = false;
+                Time.timeScale = 1.0f;
+                inventoryWindow.SetActive(false);
+            }
+        }
+    }
+
+    public void OnEquipButton()
+    {
+
+    }
+    void UnEquip(int index)
+    {
+
+    }
+    public void OnUnEquipButton()
+    {
+
+    }
+    public void OnDropButton()
+    {
+        ThrowItem(selectedItem.item);
+        RemoveSelectedItem();
+    }
+
+    private void RemoveSelectedItem()
+    {
+        selectedItem.quantity--;
+
+        //아이템의 남은 수량이 0이 되면
+        if(selectedItem.quantity <= 0)
+        {
+            //만약 버린 아이템이 장착중인 아이템일 경우 해제시키기
+            if (uidSlot[selectedItemIndex].enabled)
+                UnEquip(selectedItemIndex);
+            //아이템 제거 및 UI 에서도 아이템 정보 지우기
+            selectedItem.item = null;
+            ClearSelectItemWindow();
+        }
+        UpdateUI();
+    }
+
+    public void RemoveItem(itemData item)
+    {
+
+    }
+
+    public bool HasItems(itemData item, int quantity)
+    {
+        return false;
     }
 }
