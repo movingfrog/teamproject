@@ -22,8 +22,8 @@ public class PlayerHealth : MonoBehaviour
     private Color currentColor; // 지금 색
 
     private SpriteRenderer spriteRenderer;
-    private int PlayerLayer;
-    private int PlayerDamagedLayer;
+    private int Player;
+    private int PlayerDamaged;
 
     private void Start()
     {
@@ -31,10 +31,9 @@ public class PlayerHealth : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentColor = spriteRenderer.color;
 
-        PlayerLayer = LayerMask.NameToLayer("Player");
-        PlayerDamagedLayer = LayerMask.NameToLayer("PlayerDamaged");
+        Player = LayerMask.NameToLayer("Player");
+        PlayerDamaged = LayerMask.NameToLayer("PlayerDamaged");
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -89,12 +88,12 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator invincibility()
     {
         isInvincible = true;
-        gameObject.layer = PlayerDamagedLayer;
+        gameObject.layer = PlayerDamaged;
         spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, currentColor.a * 0.5f); // 반투명색으로 전환
         yield return new WaitForSeconds(invincibilityDuration);
 
         spriteRenderer.color = currentColor; // 원래 색으로 변환
-        gameObject.layer = PlayerLayer;
+        gameObject.layer = Player;
         isInvincible = false;
     }
 }

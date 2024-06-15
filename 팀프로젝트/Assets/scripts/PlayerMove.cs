@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class PlayerMove : MonoBehaviour
             moveSpeed = currentSpeed;
         }
     }
-
+    
     // Attack
     private IEnumerator AttackCoroutine()
     {
