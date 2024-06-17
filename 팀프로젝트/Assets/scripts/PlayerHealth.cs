@@ -35,6 +35,13 @@ public class PlayerHealth : MonoBehaviour
         
         Player = LayerMask.NameToLayer("Player");
         PlayerDamaged = LayerMask.NameToLayer("PlayerDamaged");
+
+        // 체력바 초기화
+        if (healthUI != null )
+        {
+            healthUI.maxValue = maxHealth;
+            healthUI.value = currentHealth;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -48,13 +55,17 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // 피격
     public void Damaged()
     {
         if (currentHealth > 0)
         {
             Debug.Log("Damaged");
-            currentHealth -= damage;
-            //HandleHP();
+            currentHealth -= damage;;
+            if (healthUI != null)
+            {
+                healthUI.value = currentHealth;
+            }
             if (currentHealth <= 0)
             {
                 Debug.Log("Die");
@@ -63,17 +74,24 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // 죽음
     public void Die()
     {
         Respawn();
     }
 
+    // 리스폰
     public void Respawn()
     {
         transform.position = respawnPosition;
         currentHealth = maxHealth;
+        if (healthUI != null)
+        {
+            healthUI.value = currentHealth;
+        }
     }
 
+    // 넉백
     private IEnumerator Knockback(Vector2 knockbackDir)
     {
         isKnockback = true;
@@ -88,7 +106,8 @@ public class PlayerHealth : MonoBehaviour
         isKnockback = false;
     }
 
-    private IEnumerator Invincibility()
+    // 무적 시간
+    public IEnumerator Invincibility()
     {
         isInvincible = true;
         gameObject.layer = PlayerDamaged;
@@ -99,9 +118,4 @@ public class PlayerHealth : MonoBehaviour
         gameObject.layer = Player;
         isInvincible = false;
     }
-
-    /*private void HandleHP()
-    {
-        healthUI.value = Mathf.Lerp(healthUI.value, (float)currentHealth - damage, Time.deltaTime);
-    }*/
 }
