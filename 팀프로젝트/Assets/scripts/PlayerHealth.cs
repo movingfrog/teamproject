@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth;
     public float currentHealth;
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
+    [SerializeField]public Slider healthUI;
 
     // Knockback
     public float knockbackForce = 2.5f; // ³Ë¹éÈû
@@ -30,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentColor = spriteRenderer.color;
-
+        
         Player = LayerMask.NameToLayer("Player");
         PlayerDamaged = LayerMask.NameToLayer("PlayerDamaged");
     }
@@ -42,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
             Damaged();
             Vector2 knockbackDir = (transform.position - collision.transform.position).normalized;
             StartCoroutine(Knockback(knockbackDir));
-            StartCoroutine(invincibility());
+            StartCoroutine(Invincibility());
         }
     }
 
@@ -52,6 +54,7 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("Damaged");
             currentHealth -= damage;
+            //HandleHP();
             if (currentHealth <= 0)
             {
                 Debug.Log("Die");
@@ -85,7 +88,7 @@ public class PlayerHealth : MonoBehaviour
         isKnockback = false;
     }
 
-    private IEnumerator invincibility()
+    private IEnumerator Invincibility()
     {
         isInvincible = true;
         gameObject.layer = PlayerDamaged;
@@ -96,4 +99,9 @@ public class PlayerHealth : MonoBehaviour
         gameObject.layer = Player;
         isInvincible = false;
     }
+
+    /*private void HandleHP()
+    {
+        healthUI.value = Mathf.Lerp(healthUI.value, (float)currentHealth - damage, Time.deltaTime);
+    }*/
 }
