@@ -71,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
                 Debug.Log("Die");
                 Die();
             }
+            GameManager.instance.stop = true;
         }
     }
 
@@ -117,5 +118,8 @@ public class PlayerHealth : MonoBehaviour
         spriteRenderer.color = currentColor; // 원래 색으로 변환
         gameObject.layer = Player;
         isInvincible = false;
+
+        // 무적 시간이 끝나면 stop을 false로 설정
+        GameManager.instance.stop = false;
     }
 }

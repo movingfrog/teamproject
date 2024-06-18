@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyFSM : MonoBehaviour
 {
+    PlayerHealth PlayerHealth;
+
     public float enemycurrentSpeed;
     public float enemychaseSpeed;
     public float chaseRange;
@@ -68,6 +70,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void Chase()
     {
+        if (GameManager.instance.stop) { return; }
         if (Vector2.Distance(transform.position, target.position) > chaseRange)
         {
             currentState = State.IDLE;
