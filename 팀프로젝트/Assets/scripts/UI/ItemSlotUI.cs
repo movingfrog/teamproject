@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,9 +27,13 @@ public class ItemSlotUI : MonoBehaviour
     // 아이템 Slot 정보 전달
     public void Set(ItemSlot slot)
     {
+        Debug.Log(slot);
+        Debug.Log(slot.item);
+        Debug.Log(slot.item.icon);
         curSlot = slot;
         icon.gameObject.SetActive(true);
         icon.sprite = slot.item.icon;
+        Debug.Log(icon.sprite.name);
         quatityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;
 
         if (outline != null)
@@ -48,5 +53,4 @@ public class ItemSlotUI : MonoBehaviour
     {
         Inventory.instance.SelectItem(index);
     }
-
 }

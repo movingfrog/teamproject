@@ -5,8 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - player
-  - kit
-  - gear
+  - item
   layers:
   - Default
   - TransparentFX

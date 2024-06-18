@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5347780582402558987}
   - component: {fileID: 85785629248604746}
   - component: {fileID: 3883967019623541646}
+  - component: {fileID: 3644171110452332066}
   m_Layer: 0
   m_Name: FirstAidKit
-  m_TagString: kit
+  m_TagString: item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,3 +121,17 @@ CircleCollider2D:
   m_Offset: {x: 0.02, y: -0.05}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &3644171110452332066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730352187423875637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6308d792f33fa47bb402f827440c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 86787cea36acf0340b4b7cd3990da52f, type: 2}
+  IsPlayerCon: 0

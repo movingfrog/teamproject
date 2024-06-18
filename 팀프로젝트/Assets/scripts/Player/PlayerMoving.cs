@@ -19,10 +19,6 @@ public class PlayerMoving : MonoBehaviour
     {
         Move();
     }
-    //private void Update()
-    //{
-    //    Jump();
-    //}
 
     public void Move()
     {
@@ -31,11 +27,4 @@ public class PlayerMoving : MonoBehaviour
 
         transform.Translate((new Vector3(h, v, 0) * maxSpeed) * Time.deltaTime);
     }
-    //public void Jump()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-    //    {
-    //        rigid.AddForce(Vector3.up*jump, ForceMode2D.Impulse);
-    //    }
-    //}
 }

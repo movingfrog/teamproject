@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8248484764638018907}
   - component: {fileID: 600487656436750538}
   - component: {fileID: 4299874719510174157}
+  - component: {fileID: 1451114468730366744}
   m_Layer: 0
   m_Name: RustyGear
-  m_TagString: gear
+  m_TagString: item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,3 +121,17 @@ CircleCollider2D:
   m_Offset: {x: 0.02, y: -0.02}
   serializedVersion: 2
   m_Radius: 0.6
+--- !u!114 &1451114468730366744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485899879452141113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6308d792f33fa47bb402f827440c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: ea11aca6743befe4eb52fc43dc9658b1, type: 2}
+  IsPlayerCon: 0

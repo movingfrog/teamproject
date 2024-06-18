@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 
 public class ItemSlot
@@ -96,6 +97,8 @@ public class Inventory : MonoBehaviour
         {
             //쌓일 수 있는 아이템일 경우 스택을 쌓아준다
             ItemSlot slotToStackTo = GetItemStack(item);
+        Debug.Log(slotToStackTo);
+
             if (slotToStackTo != null)
             {
                 slotToStackTo.quantity++;
@@ -107,6 +110,7 @@ public class Inventory : MonoBehaviour
         //없을 경우 빈칸에 아이템을 추가해준다
         ItemSlot emptySlot = GetEmptySlot();
 
+        Debug.Log(emptySlot);
         if (emptySlot != null)
         {
             emptySlot.item = item;
@@ -122,19 +126,36 @@ public class Inventory : MonoBehaviour
     private void ThrowItem(itemData item)
     {
         //아이템 버리기
+        Debug.Log("Throw");
         Instantiate(item.dropPerfab, dropPosition.position, Quaternion.Euler(Vector3.zero));
     }
 
     void UpdateUI()
     {
-        //slots에 있는 아이템 데이터를 UI의 Slot 최신화 하기
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] != null)
-                uidSlot[i].Set(slots[i]);
-            else
-                uidSlot[i].Clear();
-        }
+        Debug.Log(slots.Count());
+        //for (int i = 0; i < slots.Length; i++)
+        //{
+        //    Debug.Log(slots[i]);
+        //    Debug.Log(slots[i].item);
+        //    Debug.Log(slots[i].item.icon);
+        //    Debug.Log(slots[i].item.icon.name);
+        //}
+            //slots에 있는 아이템 데이터를 UI의 Slot 최신화 하기
+            for (int i = 0; i < slots.Count(); i++)
+            {
+                 if (slots[i].item != null)
+                 {
+                      Debug.Log(slots[i]);
+                       Debug.Log(slots[i].item);
+
+                     Debug.Log(slots[i].item.icon);
+
+                      uidSlot[i].Set(slots[i]);
+
+                 }
+                  else
+                         uidSlot[i].Clear();
+            }
     }
 
     ItemSlot GetItemStack(itemData item)
@@ -154,8 +175,13 @@ public class Inventory : MonoBehaviour
         //빈 슬롯 찾기
         for (int i = 0; i < slots.Length; i++)
         {
+
             if (slots[i].item == null)
+            {
+
+                Debug.Log("asdf");
                 return slots[i];
+            }
         }
 
         return null;
