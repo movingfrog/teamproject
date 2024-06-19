@@ -11,6 +11,17 @@ public class PlayerItemContact : MonoBehaviour
         game = GetComponent<GameObject>();
     }
 
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "item")
+        {
+            game = collision.gameObject;
+            isItemContact = true;
+            Debug.Log(game);
+        }
+    }
+
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "item")
@@ -25,6 +36,7 @@ public class PlayerItemContact : MonoBehaviour
         {
             game = null;
             isItemContact = false;
+            Debug.Log(game);
         }
     }
 }

@@ -11,21 +11,21 @@ public class ItemObject : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && IsPlayerCon)
+        if (Input.GetKeyUp(KeyCode.F) && IsPlayerCon)
         {
             Debug.Log(item.icon);
-            Inventory.instance.AddItem(item);   // 인벤토리에 아이템 추가하기
             Destroy(gameObject);
+            Inventory.instance.AddItem(item);   // 인벤토리에 아이템 추가하기
         }
     }
         private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "player"&&PlayerItemContact.game == null)
+        if(collision.gameObject.tag == "player")
             IsPlayerCon = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "player"&&PlayerItemContact.game != null)
+        if(collision.gameObject.tag == "player")
             IsPlayerCon = false;
     }
 }
