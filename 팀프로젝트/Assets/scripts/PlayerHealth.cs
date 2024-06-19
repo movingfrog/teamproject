@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
     [SerializeField]public Slider healthUI;
+    public ExplosionEnemy ExplosionEnemy;
 
     // Knockback
     public float knockbackForce = 2.5f; // ³Ë¹éÈû
@@ -58,10 +59,15 @@ public class PlayerHealth : MonoBehaviour
     // ÇÇ°Ý
     public void Damaged()
     {
+        TakeDamage(damage);
+    }
+
+    public void TakeDamage(float damage)
+    {
         if (currentHealth > 0)
         {
             Debug.Log("Damaged");
-            currentHealth -= damage;;
+            currentHealth -= damage; ;
             if (healthUI != null)
             {
                 healthUI.value = currentHealth;

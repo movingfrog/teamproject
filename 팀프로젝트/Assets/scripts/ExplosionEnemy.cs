@@ -54,7 +54,10 @@ public class ExplosionEnemy : MonoBehaviour
         
         yield return new WaitForSeconds(ExplodeDelay);
 
-        playerHealth.currentHealth -= CaculateDamage();
+        float damage = CaculateDamage();
+        playerHealth.TakeDamage(damage);
+
+        // ÀÚÆø ÈÄ ÆÄ±«
         Destroy();
     }
 
