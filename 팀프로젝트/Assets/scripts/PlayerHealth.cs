@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public ExplosionEnemy ExplosionEnemy;
+
     // Health
     public int damage;
     public int maxHealth;
     public float currentHealth;
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
-    [SerializeField]public Slider healthUI;
-    public ExplosionEnemy ExplosionEnemy;
-
+    
     // Knockback
     public float knockbackForce = 2.5f; // ³Ë¹éÈû
     public float knockbackDuration = 0.2f; // ³Ë¹é ½Ã°£
@@ -27,6 +27,12 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private int Player;
     private int PlayerDamaged;
+
+    // UI
+    public Slider healthUI;
+    public Image DieUI;
+    public Button RespawnBtn;
+
 
     private void Start()
     {
@@ -43,6 +49,8 @@ public class PlayerHealth : MonoBehaviour
             healthUI.maxValue = maxHealth;
             healthUI.value = currentHealth;
         }
+
+        DieUI.gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -84,12 +92,17 @@ public class PlayerHealth : MonoBehaviour
     // Á×À½
     public void Die()
     {
-        Respawn();
+        // ½Ã°£ ¸ØÃã
+        Time.timeScale = 0f;
+        DieUI.gameObject.SetActive(true);
     }
 
     // ¸®½ºÆù
     public void Respawn()
     {
+        // ½Ã°£ Èå¸§
+        Time.timeScale = 1f;
+
         transform.position = respawnPosition;
         currentHealth = maxHealth;
         if (healthUI != null)
