@@ -76,4 +76,12 @@ public class EnemyHealth : MonoBehaviour
             EnemyHP.gameObject.SetActive(true);
         }
     }
+
+    public void HideHealthBar()
+    {
+        if (EnemyHP != null)
+        {
+            EnemyHP.gameObject.SetActive(false);
+        }
+    }
 }

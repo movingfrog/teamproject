@@ -6,6 +6,7 @@ using UnityEngine;
 public class ExplosionEnemy : MonoBehaviour
 {
     PlayerHealth playerHealth;
+    EnemyHealth enemyHealth;
 
     // Attack
     public float AttackRange = 4f;
@@ -23,6 +24,7 @@ public class ExplosionEnemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void Update()
@@ -57,6 +59,12 @@ public class ExplosionEnemy : MonoBehaviour
 
         float damage = CaculateDamage();
         playerHealth.TakeDamage(damage);
+
+        // 자폭 후 체력바 비활성화
+        if (enemyHealth != null)
+        {
+            enemyHealth.HideHealthBar();
+        }
 
         // 자폭 후 파괴
         Destroy();
