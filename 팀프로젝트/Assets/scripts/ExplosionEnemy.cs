@@ -73,6 +73,4 @@ public class ExplosionEnemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-   
 }
