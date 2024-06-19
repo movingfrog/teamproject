@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class ExplosionEnemy : MonoBehaviour
 {
     PlayerHealth playerHealth;
 
+    // Attack
     public float AttackRange = 4f;
     public float ExplodeDelay = 0.5f;
     public float AttackSpeed = 3f;
@@ -72,4 +73,6 @@ public class ExplosionEnemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+   
 }
