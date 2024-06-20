@@ -57,11 +57,8 @@ public class ExplosionEnemy : MonoBehaviour
         
         yield return new WaitForSeconds(ExplodeDelay);
 
-        StartCoroutine(playerHealth.Invincibility());
-
         if (playerHealth != null)
         {
-            StartCoroutine(playerHealth.Invincibility());
             float damage = CaculateDamage();
             playerHealth.TakeDamage(damage);
         }

@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isKnockback = false;
     
     // Iinvincibility Time
-    public bool isInvincible = false;
+    public  bool isInvincible = false;
     public float invincibilityDuration = 0.2f; //무적 시간
     private Color currentColor; // 지금 색
 
@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && !isKnockback)
+        if (collision.gameObject.CompareTag("Enemy") && !isKnockback && !isInvincible)
         {
             Damaged();
             Vector2 knockbackDir = (transform.position - collision.transform.position).normalized;
@@ -86,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
                 Debug.Log("Die");
                 Die();
             }
-           
+            StartCoroutine(Invincibility());
             GameManager.instance.stop = true;
         }
     }
@@ -106,6 +106,7 @@ public class PlayerHealth : MonoBehaviour
     {
         // 시간 흐름
         Time.timeScale = 1f;
+        DieUI.gameObject.SetActive(false);
 
         transform.position = respawnPosition;
         currentHealth = maxHealth;
@@ -134,15 +135,13 @@ public class PlayerHealth : MonoBehaviour
     public IEnumerator Invincibility()
     {
         isInvincible = true;
-        gameObject.layer = PlayerDamaged;
         spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, currentColor.a * 0.5f); // 반투명색으로 전환
         yield return new WaitForSeconds(invincibilityDuration);
 
         spriteRenderer.color = currentColor; // 원래 색으로 변환
-        gameObject.layer = Player;
         isInvincible = false;
 
-        // 무적 시간이 끝나면 stop을 false로 설정
+        // 무적 시간이 끝나면 stop을 false로 변경
         GameManager.instance.stop = false;
     }
 }
