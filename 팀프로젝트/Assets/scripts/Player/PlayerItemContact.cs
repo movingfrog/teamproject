@@ -16,7 +16,7 @@ public class PlayerItemContact : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.CompareTag("item") || collision.gameObject.CompareTag("RustyParts"))
         {
             game = collision.gameObject;
             isItemContact = true;
@@ -27,7 +27,7 @@ public class PlayerItemContact : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.CompareTag("item")|| collision.gameObject.CompareTag("RustyParts"))
         {
             game = collision.gameObject;
             isItemContact = true;
@@ -36,7 +36,7 @@ public class PlayerItemContact : MonoBehaviour
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.CompareTag("item") || collision.gameObject.CompareTag("RustyParts"))
         {
             game = null;
             isItemContact = false;
