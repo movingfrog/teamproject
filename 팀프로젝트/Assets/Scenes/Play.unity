@@ -913,8 +913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd23248a27209145b604f9b60f4daf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemycurrentSpeed: 4
-  enemychaseSpeed: 6
+  enemycurrentSpeed: 2
+  enemychaseSpeed: 4
   chaseRange: 8
   attackRange: 1
   changeDir: 1.2
@@ -1124,9 +1124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackDamage: 5
-  moveSpeed: 5
+  moveSpeed: 3
   currentSpeed: 0
-  runSpeed: 8
+  runSpeed: 5
   curTime: 0
   AttackcoolTime: 0.5
 --- !u!212 &1100821222
@@ -1214,10 +1214,11 @@ MonoBehaviour:
   currentHealth: 0
   knockbackForce: 10
   knockbackDuration: 0.2
+  isInvincible: 0
   invincibilityDuration: 1.5
   healthUI: {fileID: 2088819015}
   DieUI: {fileID: 424480548}
-  respawnBtn: {fileID: 0}
+  respawnBtn: {fileID: 338552015}
 --- !u!61 &1100821228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1831,7 +1832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemycurrentSpeed: 2
-  enemychaseSpeed: 4
+  enemychaseSpeed: 3.5
   chaseRange: 8
   attackRange: 0.2
   changeDir: 1.2
@@ -2010,7 +2011,7 @@ GameObject:
   - component: {fileID: 2062539492}
   - component: {fileID: 2062539496}
   - component: {fileID: 2062539495}
-  - component: {fileID: 2062539494}
+  - component: {fileID: 2062539497}
   - component: {fileID: 2062539493}
   m_Layer: 5
   m_Name: Main
@@ -2083,7 +2084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2062539494}
+      - m_Target: {fileID: 2062539497}
         m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
         m_MethodName: MainBtn
         m_Mode: 1
@@ -2095,18 +2096,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2062539494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062539491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11678dabe4ab4d74ea5ffff0dd9216e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2062539495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2145,6 +2134,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062539491}
   m_CullTransparentMesh: 1
+--- !u!114 &2062539497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062539491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11678dabe4ab4d74ea5ffff0dd9216e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2088819013
 GameObject:
   m_ObjectHideFlags: 0
