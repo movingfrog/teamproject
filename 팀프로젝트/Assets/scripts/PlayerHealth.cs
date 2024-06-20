@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isKnockback = false;
     
     // Iinvincibility Time
-    private bool isInvincible = false;
+    public bool isInvincible = false;
     public float invincibilityDuration = 0.2f; //무적 시간
     private Color currentColor; // 지금 색
 

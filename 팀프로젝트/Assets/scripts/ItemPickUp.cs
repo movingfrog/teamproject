@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour
 {    
-    private bool isInRange = false;
+    private bool isInRange = false; 
     private float range;
 
     Image pressF;

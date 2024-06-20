@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class PlayerMove : MonoBehaviour
 {
+    PlayerHealth playerHealth;
+
     GameObject AttackRange;
     BoxCollider2D Bc;
     Rigidbody2D rb;
@@ -30,13 +32,14 @@ public class PlayerMove : MonoBehaviour
         Bc.isTrigger = true;
         AttackRange.SetActive(false);
         enemyLayer = LayerMask.NameToLayer("Enemy");
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
     {
         Move();
 
-        if (Input.GetKey(KeyCode.F) && !isAttacking)
+        if (Input.GetKey(KeyCode.F) && !isAttacking && !playerHealth.isInvincible)
         {
             StartCoroutine(AttackCoroutine());
         }
