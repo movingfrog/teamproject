@@ -483,6 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 338552014}
   - component: {fileID: 338552017}
+  - component: {fileID: 338552018}
   - component: {fileID: 338552016}
   - component: {fileID: 338552015}
   m_Layer: 5
@@ -555,7 +556,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 338552016}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 338552018}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: RespawBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &338552016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +607,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338552013}
   m_CullTransparentMesh: 1
+--- !u!114 &338552018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338552013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11678dabe4ab4d74ea5ffff0dd9216e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &413336287
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &699135308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,11 +1212,12 @@ MonoBehaviour:
   damage: 10
   maxHealth: 100
   currentHealth: 0
-  healthUI: {fileID: 2088819015}
-  ExplosionEnemy: {fileID: 1979628922}
   knockbackForce: 10
   knockbackDuration: 0.2
   invincibilityDuration: 1.5
+  healthUI: {fileID: 2088819015}
+  DieUI: {fileID: 424480548}
+  respawnBtn: {fileID: 0}
 --- !u!61 &1100821228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1791,7 +1817,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1979628920
 MonoBehaviour:
   m_ObjectHideFlags: 0

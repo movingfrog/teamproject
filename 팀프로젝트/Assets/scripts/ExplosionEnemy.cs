@@ -51,14 +51,20 @@ public class ExplosionEnemy : MonoBehaviour
         transform.position += dir * AttackSpeed * Time.deltaTime;
     }
     
-    private IEnumerator ExplodeAttack()
+    public IEnumerator ExplodeAttack()
     {
         isExploding = true;
         
         yield return new WaitForSeconds(ExplodeDelay);
 
-        float damage = CaculateDamage();
-        playerHealth.TakeDamage(damage);
+        StartCoroutine(playerHealth.Invincibility());
+
+        if (playerHealth != null)
+        {
+            StartCoroutine(playerHealth.Invincibility());
+            float damage = CaculateDamage();
+            playerHealth.TakeDamage(damage);
+        }
 
         // 자폭 후 체력바 비활성화
         if (enemyHealth != null)

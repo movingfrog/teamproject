@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public ExplosionEnemy ExplosionEnemy;
+    ExplosionEnemy ExplosionEnemy;
+    PlayerMove PlayerMove;
 
     // Health
     public int damage;
@@ -21,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
     
     // Iinvincibility Time
     private bool isInvincible = false;
-    public float invincibilityDuration = 0.3f; //무적 시간
+    public float invincibilityDuration = 0.2f; //무적 시간
     private Color currentColor; // 지금 색
 
     private SpriteRenderer spriteRenderer;
@@ -31,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
     // UI
     public Slider healthUI;
     public Image DieUI;
-    public Button RespawnBtn;
+    public Button respawnBtn;
 
 
     private void Start()
@@ -85,6 +86,7 @@ public class PlayerHealth : MonoBehaviour
                 Debug.Log("Die");
                 Die();
             }
+           
             GameManager.instance.stop = true;
         }
     }
@@ -96,6 +98,8 @@ public class PlayerHealth : MonoBehaviour
         Time.timeScale = 0f;
         DieUI.gameObject.SetActive(true);
     }
+
+    
 
     // 리스폰
     public void Respawn()
