@@ -96,7 +96,7 @@ public class PlayerHealth : MonoBehaviour
     {
         // Ω√∞£ ∏ÿ√„
         Time.timeScale = 0f;
-        //DieUI.gameObject.SetActive(true);
+        DieUI.gameObject.SetActive(true);
     }
 
     

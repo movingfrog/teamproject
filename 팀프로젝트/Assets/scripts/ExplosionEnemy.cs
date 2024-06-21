@@ -10,10 +10,10 @@ public class ExplosionEnemy : MonoBehaviour
 
     // Attack
     public float AttackRange = 4f;
-    public float ExplodeDelay = 0.5f;
+    public float ExplodeDelay = 0.3f;
     public float AttackSpeed = 3f;
     public float increaseSpeed = 1f;
-    public float ChaseRange = 8f;
+    public float ChaseRange;
     public float maxDamage = 50f;
     public float minDamage = 10f;
 
