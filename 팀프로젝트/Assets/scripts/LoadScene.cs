@@ -1,14 +1,20 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadScene : MonoBehaviour
 {
+    public Image Menu;
+
     PlayerHealth playerHealth;
+    public GameObject Player;
 
     private void Start()
     {
-        playerHealth = GetComponent<PlayerHealth>();
+        playerHealth = Player.GetComponent<PlayerHealth>(); 
         Debug.Log("PlayerHealth 컴포넌트");
+        Debug.Log(playerHealth);
+        Debug.Log(Player);
     }
 
     public void PlayBtn()
@@ -33,10 +39,18 @@ public class LoadScene : MonoBehaviour
     public void RespawBtn()
     {
         Debug.Log("리스폰 버튼이 눌림");
+        Debug.Log(playerHealth);
         if (playerHealth != null)
         {
             Debug.Log("리스폰");
             playerHealth.Respawn();
         }
+    }
+
+    
+
+    public void MenuBtn()
+    {
+        Menu.gameObject.SetActive(true);
     }
 }

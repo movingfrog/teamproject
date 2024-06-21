@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer AttackRangeSprite;
     GameObject AttackRange;
     BoxCollider2D Bc;
-    Rigidbody2D rb;
+    public Image Menu;
 
     public float AttackDamage = 5f;
     private float _attackDelay = 0.4f;
@@ -29,7 +31,6 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         currentSpeed = moveSpeed;
-        rb = GetComponent<Rigidbody2D>();
         AttackRange = transform.GetChild(0).gameObject;
         Bc = AttackRange.GetComponent<BoxCollider2D>();
         Bc.isTrigger = true;
@@ -38,10 +39,6 @@ public class PlayerMove : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
 
         AttackRangeSprite = AttackRange.GetComponent<SpriteRenderer>();
-        if (AttackRangeSprite == null)
-        {
-            AttackRangeSprite = AttackRange.AddComponent<SpriteRenderer>();
-        }
         AttackRangeSprite.color = new Color(1f, 0f, 0f, 0.5f); // 반투명 빨간색으로 설정
         AttackRange.SetActive(false);
     }
@@ -54,6 +51,7 @@ public class PlayerMove : MonoBehaviour
         {
             StartCoroutine(AttackCoroutine());
         }
+        menu();
     }
 
     // Move
@@ -126,6 +124,14 @@ private void OnTriggerEnter2D(Collider2D collision)
             { 
                 enemyHp.Damage(AttackDamage);
             }
+        }
+    }
+
+    private void menu()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Menu.gameObject.SetActive(true);
         }
     }
 }
