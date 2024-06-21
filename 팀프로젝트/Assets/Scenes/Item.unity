@@ -7009,7 +7009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5293831881172878244, guid: 398e8c99b89cba44489a6a69b97864b2, type: 3}
       propertyPath: m_TagString
-      value: item
+      value: RustyParts
       objectReference: {fileID: 0}
     - target: {fileID: 5927893868188198799, guid: 398e8c99b89cba44489a6a69b97864b2, type: 3}
       propertyPath: m_LocalPosition.x
