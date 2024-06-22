@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -11,7 +12,6 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer AttackRangeSprite;
     GameObject AttackRange;
     BoxCollider2D Bc;
-    public Image Menu;
 
     public float AttackDamage = 5f;
     private float _attackDelay = 0.4f;
@@ -51,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         {
             StartCoroutine(AttackCoroutine());
         }
-        menu();
     }
 
     // Move
@@ -79,7 +78,7 @@ public class PlayerMove : MonoBehaviour
             moveSpeed = currentSpeed;
         }
     }
-    
+
     // Attack
     private IEnumerator AttackCoroutine()
     {
@@ -115,23 +114,15 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == _enemyLayer)
         {
             EnemyHealth enemyHp = collision.GetComponent<EnemyHealth>();
             if (enemyHp != null)
-            { 
+            {
                 enemyHp.Damage(AttackDamage);
             }
-        }
-    }
-
-    private void menu()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Menu.gameObject.SetActive(true);
         }
     }
 }

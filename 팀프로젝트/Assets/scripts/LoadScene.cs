@@ -11,10 +11,15 @@ public class LoadScene : MonoBehaviour
 
     private void Start()
     {
-        playerHealth = Player.GetComponent<PlayerHealth>(); 
-        Debug.Log("PlayerHealth 컴포넌트");
-        Debug.Log(playerHealth);
-        Debug.Log(Player);
+        if (Player !=  null)
+        {
+            playerHealth = Player.GetComponent<PlayerHealth>();
+            Debug.Log("PlayerHealth 컴포넌트");
+        }
+        else
+        {
+            Debug.Log("Player 오브젝트가 null");
+        }
     }
 
     public void PlayBtn()
@@ -49,8 +54,5 @@ public class LoadScene : MonoBehaviour
 
     
 
-    public void MenuBtn()
-    {
-        Menu.gameObject.SetActive(true);
-    }
+    
 }
