@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,8 +11,12 @@ public class PlayerMove : MonoBehaviour
 {
     PlayerHealth playerHealth;
     SpriteRenderer AttackRangeSprite;
+    SpriteRenderer sprite;
     GameObject AttackRange;
+    Rigidbody2D rb;
     BoxCollider2D Bc;
+    Animator anim;
+    [SerializeField] Image menu;
 
     public float AttackDamage = 5f;
     private float _attackDelay = 0.4f;
@@ -19,19 +24,24 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed;
     public float currentSpeed;
     public float runSpeed;
+    public Vector2 inputVec;
 
     private Vector3 _Movevelocity = Vector3.zero;
     public float curTime;
     public float AttackcoolTime = 0.5f;
     private int _enemyLayer;
+    
 
     // 방향 저장
     private Vector2 _lastMoveDirection = Vector2.down;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         currentSpeed = moveSpeed;
         AttackRange = transform.GetChild(0).gameObject;
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         Bc = AttackRange.GetComponent<BoxCollider2D>();
         Bc.isTrigger = true;
         AttackRange.SetActive(false);
@@ -45,22 +55,38 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        Move();
-
+        Menu();
         if (Input.GetKey(KeyCode.F) && !_isAttacking && !playerHealth.isInvincible)
         {
             StartCoroutine(AttackCoroutine());
         }
     }
 
-    // Move
-    void Move()
+    private void FixedUpdate()
     {
-        float x = Input.GetAxisRaw("Horizontal"); // 좌우 이동
-        float y = Input.GetAxisRaw("Vertical"); // 상하 이동
+        Vector2 _nextMove = inputVec.normalized * currentSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + _nextMove);
+    }
 
+    private void LateUpdate()
+    {
+        anim.SetFloat("Speed", inputVec.magnitude);
+
+        if (inputVec.x != 0)
+        {
+            sprite.flipX = inputVec.x < 0;
+        }
+    }
+
+    // Move
+    void OnMove(InputValue value)
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+        inputVec = value.Get<Vector2>();
         Vector3 _MoveDir = new Vector3(x, y, 0).normalized;
 
+        
         if (_MoveDir != Vector3.zero)
         {
             _lastMoveDirection = _MoveDir;
@@ -123,6 +149,14 @@ public class PlayerMove : MonoBehaviour
             {
                 enemyHp.Damage(AttackDamage);
             }
+        }
+    }
+
+    private void Menu()
+    {
+        if (Input.GetKey(KeyCode.Escape) && !playerHealth.isDie)
+        {
+            menu.gameObject.SetActive(true);
         }
     }
 }

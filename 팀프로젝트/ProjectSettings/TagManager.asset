@@ -9,6 +9,8 @@ TagManager:
   - player
   - kit
   - gear
+  - Ground
+  - Area
   layers:
   - Default
   - TransparentFX

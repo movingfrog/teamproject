@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyFSM : MonoBehaviour
 {
     PlayerHealth PlayerHealth;
+    Animator anim;
+    [SerializeField] Vector2 EnemyDir;
+    SpriteRenderer spriteRenderer;
 
     public float enemycurrentSpeed;
     public float enemychaseSpeed;
@@ -27,6 +31,7 @@ public class EnemyFSM : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -60,6 +65,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void Idle()
     {
+        
         rb.velocity = moveDir * enemycurrentSpeed;
 
         if (Vector2.Distance(transform.position, target.position) <= chaseRange)
@@ -70,6 +76,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void Chase()
     {
+        //anim.SetFloat("isChase", enemycurrentSpeed);
         if (GameManager.instance.stop) { return; }
         if (Vector2.Distance(transform.position, target.position) > chaseRange)
         {
@@ -112,6 +119,21 @@ public class EnemyFSM : MonoBehaviour
             case 7:
                 moveDir = new Vector2(-1, -1).normalized; // Diagonal Down Left
                 break;
+        }
+
+        EnemyDir = moveDir;
+        FlipSprite();
+    }
+
+    private void FlipSprite()
+    {
+        if (EnemyDir.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (EnemyDir.x > 0)
+        {
+            spriteRenderer.flipX = false;
         }
     }
 }

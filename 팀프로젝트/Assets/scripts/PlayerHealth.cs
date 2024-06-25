@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth;
     public float currentHealth;
     private Vector3 respawnPosition = new Vector3(0, 0, 0);
+    public bool isDie = false;
     
     // Knockback
     public float knockbackForce = 2.5f; // ≥ÀπÈ»˚
@@ -96,6 +97,8 @@ public class PlayerHealth : MonoBehaviour
     {
         // Ω√∞£ ∏ÿ√„
         Time.timeScale = 0f;
+        isDie = true;
+        Debug.Log(isDie);
         DieUI.gameObject.SetActive(true);
     }
 
@@ -106,6 +109,8 @@ public class PlayerHealth : MonoBehaviour
     {
         // Ω√∞£ »Â∏ß
         Time.timeScale = 1f;
+        isDie = false;
+        Debug.Log(isDie);
         DieUI.gameObject.SetActive(false);
 
         transform.position = respawnPosition;

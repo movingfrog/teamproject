@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager _instance;
+    public PlayerMove player; 
+
     public static GameManager instance { get { set(); return _instance; } }
     public static void set()
     {
@@ -19,4 +21,9 @@ public class GameManager : MonoBehaviour
     }
 
     public bool stop = false;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 }
