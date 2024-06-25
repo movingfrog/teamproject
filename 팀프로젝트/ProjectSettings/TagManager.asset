@@ -10,16 +10,23 @@ TagManager:
   - item
   - Rocket
   - RustyParts
+  - kit
+  - gear
+  - Ground
+  - Area
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Player
   - Interactable
   - Rocket
+  - PlayerDamaged
+  - Enemy
+  - BackGround
   - 
   - 
   - 

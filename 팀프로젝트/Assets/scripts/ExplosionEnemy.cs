@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class ExplosionEnemy : MonoBehaviour
 {
     PlayerHealth playerHealth;
+    EnemyHealth enemyHealth;
 
+    // Attack
     public float AttackRange = 4f;
-    public float ExplodeDelay = 0.5f;
+    public float ExplodeDelay = 0.3f;
     public float AttackSpeed = 3f;
     public float increaseSpeed = 1f;
-    public float ChaseRange = 8f;
+    public float ChaseRange;
     public float maxDamage = 50f;
     public float minDamage = 10f;
 
@@ -22,6 +24,7 @@ public class ExplosionEnemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void Update()
@@ -48,13 +51,25 @@ public class ExplosionEnemy : MonoBehaviour
         transform.position += dir * AttackSpeed * Time.deltaTime;
     }
     
-    private IEnumerator ExplodeAttack()
+    public IEnumerator ExplodeAttack()
     {
         isExploding = true;
         
         yield return new WaitForSeconds(ExplodeDelay);
 
-        playerHealth.currentHealth -= CaculateDamage();
+        if (playerHealth != null)
+        {
+            float damage = CaculateDamage();
+            playerHealth.TakeDamage(damage);
+        }
+
+        // ÀÚÆø ÈÄ Ã¼·Â¹Ù ºñÈ°¼ºÈ­
+        if (enemyHealth != null)
+        {
+            enemyHealth.HideHealthBar();
+        }
+
+        // ÀÚÆø ÈÄ ÆÄ±«
         Destroy();
     }
 
