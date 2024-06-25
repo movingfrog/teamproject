@@ -3,6 +3,7 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour
 {
     public itemData item;
+
     public bool IsPlayerCon;
 
     private void Start()
@@ -19,7 +20,7 @@ public class ItemObject : MonoBehaviour
                 Quast.stack++;
             }
             Destroy(gameObject);
-            Inventory.instance.AddItem(item);   // ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ Ãß°¡ÇÏ±â
+            Inventory.instance.AddItem(item);   // Ã€ÃÂºÂ¥Ã…Ã¤Â¸Â®Â¿Â¡ Â¾Ã†Ã€ÃŒÃ…Ã› ÃƒÃŸÂ°Â¡Ã‡ÃÂ±Ã¢
         }
     }
      private void OnTriggerEnter2D(Collider2D collision)
@@ -39,5 +40,6 @@ public class ItemObject : MonoBehaviour
         if(collision.gameObject.tag == "player")
             IsPlayerCon = false;
     }
+
 }
 
