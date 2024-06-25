@@ -7,8 +7,9 @@ TagManager:
   - Enemy
   - ExplosionEnemy
   - player
-  - kit
-  - gear
+  - item
+  - Rocket
+  - RustyParts
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - Player
   - Interactable
-  - 
+  - Rocket
   - 
   - 
   - 

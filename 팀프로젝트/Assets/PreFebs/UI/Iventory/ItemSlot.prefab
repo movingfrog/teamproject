@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5195383105997238422}
   - component: {fileID: 2799690557690187205}
   - component: {fileID: 1266875835536705848}
-  - component: {fileID: 7256622786416159745}
-  - component: {fileID: 1515779698488570784}
-  - component: {fileID: 8713618273602564277}
+  - component: {fileID: -6774457791431372124}
+  - component: {fileID: 5497945039262028226}
+  - component: {fileID: 7444202414891029675}
   m_Layer: 0
   m_Name: ItemSlot
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7256622786416159745
+--- !u!114 &-6774457791431372124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,8 +123,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1266875835536705848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1515779698488570784
+      m_Calls:
+      - m_Target: {fileID: 5497945039262028226}
+        m_TargetAssemblyTypeName: ItemSlotUI, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5497945039262028226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,15 +145,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1447184843780879641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4a4d3d4bc7a6e1438ce3746cf1d1fe0, type: 3}
+
+  m_Script: {fileID: 11500000, guid: 3747b1ada62caf74fafdd4b21c7d9f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 7256622786416159745}
+  button: {fileID: -6774457791431372124}
   icon: {fileID: 28047055084858109}
   quatityText: {fileID: 4945064607083026164}
   index: 0
   equipped: 0
---- !u!114 &8713618273602564277
+--- !u!114 &7444202414891029675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.7132075, g: 0.7132075, b: 0.7132075, a: 1}
+  m_EffectColor: {r: 0.5245282, g: 0.5245282, b: 0.5245282, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &4783816605117609975

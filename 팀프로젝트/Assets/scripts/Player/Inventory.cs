@@ -3,6 +3,9 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
+using System.Linq;
+
+
 
 public class ItemSlot
 {
@@ -53,7 +56,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < uidSlot.Length; i++)
         {
-            //UI slot ÃÊ±âÈ­ ÇÏ±â
+            //UI slot ì´ˆê¸°í™” í•˜ê¸°
             slots[i] = new ItemSlot();
             uidSlot[i].index = i;
             uidSlot[i].Clear();
@@ -64,8 +67,10 @@ public class Inventory : MonoBehaviour
 
     public void OnInventoryButton(InputAction.CallbackContext context)
     {
-        //ÀÎº¥Åä¸® Å°´Â Key ÀÌº¥Æ®
-        if(context.phase == InputActionPhase.Started)
+        //ì¸ë²¤í† ë¦¬ í‚¤ëŠ” Key ì´ë²¤íŠ¸
+
+        if (context.phase == InputActionPhase.Started)
+
         {
             Toggle();
         }
@@ -92,11 +97,15 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(itemData item)
     {
-        if(item.canStack)
+
+        if (item.canStack)
         {
-            //½×ÀÏ ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÏ °æ¿ì ½ºÅÃÀ» ½×¾ÆÁØ´Ù
+            //ìŒ“ì¼ ìˆ˜ ìžˆëŠ” ì•„ì´í…œì¼ ê²½ìš° ìŠ¤íƒì„ ìŒ“ì•„ì¤€ë‹¤
             ItemSlot slotToStackTo = GetItemStack(item);
-            if(slotToStackTo != null)
+        Debug.Log(slotToStackTo);
+
+            if (slotToStackTo != null)
+
             {
                 slotToStackTo.quantity++;
                 UpdateUI();
@@ -104,10 +113,13 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        //¾øÀ» °æ¿ì ºóÄ­¿¡ ¾ÆÀÌÅÛÀ» Ãß°¡ÇØÁØ´Ù
+        //ì—†ì„ ê²½ìš° ë¹ˆì¹¸ì— ì•„ì´í…œì„ ì¶”ê°€í•´ì¤€ë‹¤
         ItemSlot emptySlot = GetEmptySlot();
 
-        if(emptySlot != null)
+
+        Debug.Log(emptySlot);
+        if (emptySlot != null)
+
         {
             emptySlot.item = item;
             emptySlot.quantity = 1;
@@ -115,34 +127,57 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        //ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ¾÷½½ °æ¿ì È¹µæÇÑ ¾ÆÀÌÅÛ ´Ù½Ã ¹ö¸®±â
+        //ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ì—…ìŠ¬ ê²½ìš° íšë“í•œ ì•„ì´í…œ ë‹¤ì‹œ ë²„ë¦¬ê¸°
         ThrowItem(item);
     }
 
     private void ThrowItem(itemData item)
     {
-        //¾ÆÀÌÅÛ ¹ö¸®±â
+        //ì•„ì´í…œ ë²„ë¦¬ê¸°
+
+        Debug.Log("Throw");
+
         Instantiate(item.dropPerfab, dropPosition.position, Quaternion.Euler(Vector3.zero));
     }
 
     void UpdateUI()
     {
-        //slots¿¡ ÀÖ´Â ¾ÆÀÌÅÛ µ¥ÀÌÅÍ¸¦ UIÀÇ Slot ÃÖ½ÅÈ­ ÇÏ±â
-        for (int i = 0;i<slots.Length;i++)
-        {
-            if (slots[i] != null)
-                uidSlot[i].Set(slots[i]);
-            else
-                uidSlot[i].Clear();
-        }
+
+        Debug.Log(slots.Count());
+        //for (int i = 0; i < slots.Length; i++)
+        //{
+        //    Debug.Log(slots[i]);
+        //    Debug.Log(slots[i].item);
+        //    Debug.Log(slots[i].item.icon);
+        //    Debug.Log(slots[i].item.icon.name);
+        //}
+            //slotsì— ìžˆëŠ” ì•„ì´í…œ ë°ì´í„°ë¥¼ UIì˜ Slot ìµœì‹ í™” í•˜ê¸°
+            for (int i = 0; i < slots.Count(); i++)
+            {
+                 if (slots[i].item != null)
+                 {
+                      Debug.Log(slots[i]);
+                       Debug.Log(slots[i].item);
+
+                     Debug.Log(slots[i].item.icon);
+
+                      uidSlot[i].Set(slots[i]);
+
+                 }
+                  else
+                         uidSlot[i].Clear();
+            }
+
     }
 
     ItemSlot GetItemStack(itemData item)
     {
-        //ÇöÀç ¼±ÅÃÇÑ ¾ÆÀÌÅÛÀÌ ÀÌ¹Ì ½½·Ô¿¡ ÀÖ°í, ¾ÆÁ÷ ÃÖ´ë¼ö·®À» ¾È ³Ñ°å´Ù¸é ÇØ´ç ¾ÆÀÌÅÛÀÌ À§Ä¡ÇÑ ½½·ÎÀÇ À§Ä¡¸¦ °¡Á®¿Â´Ù
-        for(int i = 0;i<slots.Length; i++)
+        //í˜„ìž¬ ì„ íƒí•œ ì•„ì´í…œì´ ì´ë¯¸ ìŠ¬ë¡¯ì— ìžˆê³ , ì•„ì§ ìµœëŒ€ìˆ˜ëŸ‰ì„ ì•ˆ ë„˜ê²¼ë‹¤ë©´ í•´ë‹¹ ì•„ì´í…œì´ ìœ„ì¹˜í•œ ìŠ¬ë¡œì˜ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜¨ë‹¤
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == item&& slots[i].quantity < item.maxStackAmount)
+            if (slots[i].item == item && slots[i].quantity < item.maxStackAmount)
+
                 return slots[i];
         }
 
@@ -151,11 +186,18 @@ public class Inventory : MonoBehaviour
 
     ItemSlot GetEmptySlot()
     {
-        //ºó ½½·Ô Ã£±â
-        for(int i = 0; i < slots.Length; i++)
+        //ë¹ˆ ìŠ¬ë¡¯ ì°¾ê¸°
+
+        for (int i = 0; i < slots.Length; i++)
         {
+
             if (slots[i].item == null)
+            {
+
+                Debug.Log("asdf");
                 return slots[i];
+            }
+
         }
 
         return null;
@@ -163,11 +205,11 @@ public class Inventory : MonoBehaviour
 
     public void SelectItem(int index)
     {
-        //¼±ÅÃÇÑ ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾øÀ» °æ¿ì return
+        //ì„ íƒí•œ ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì—†ì„ ê²½ìš° return
         if (slots[index].item == null)
             return;
 
-        //¼±ÅÃÇÑ ¾ÆÀÌÅÛ Á¤º¸ °¡Á®¿À±â
+        //ì„ íƒí•œ ì•„ì´í…œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         selectedItem = slots[index];
         selectedItemIndex = index;
 
@@ -176,14 +218,16 @@ public class Inventory : MonoBehaviour
         selectedItemStatName.text = string.Empty;
         selectedItemStatValue.text = string.Empty;
 
-        for(int i = 0; i < selectedItem.item.consumables.Length; i++)
+
+        for (int i = 0; i < selectedItem.item.consumables.Length; i++)
+
         {
-            //¸ÔÀ» ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÏ °æ¿ì Ã¤¿öÁÖ´Â Ã¼·ÂÀ» UI »ó¿¡ Ç¥½ÃÇØÁÖ±â À§ÇÑ ÄÚµå
+            //ë¨¹ì„ ìˆ˜ ìžˆëŠ” ì•„ì´í…œì¼ ê²½ìš° ì±„ì›Œì£¼ëŠ” ì²´ë ¥ì„ UI ìƒì— í‘œì‹œí•´ì£¼ê¸° ìœ„í•œ ì½”ë“œ
             selectedItemStatName.text += selectedItem.item.consumables[i].tyep.ToString() + "\n";
             selectedItemStatValue.text += selectedItem.item.consumables[i].value.ToString() + "\n";
         }
 
-        //¾ÆÀÌÅÛ Å¸ÀÔÀ» Ã¼Å©ÇÏ¿© ¹öÆ°À» È°¼ºÈ­
+        //ì•„ì´í…œ íƒ€ìž…ì„ ì²´í¬í•˜ì—¬ ë²„íŠ¼ì„ í™œì„±í™”
         useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
         equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !uidSlot[index].equipped);
         unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && uidSlot[index].equipped);
@@ -192,12 +236,14 @@ public class Inventory : MonoBehaviour
 
     private void ClearSelectItemWindow()
     {
-        //¾ÆÀÌÅÛ ÃÊ±âÈ­
+        //ì•„ì´í…œ ì´ˆê¸°í™”
         selectedItem = null;
         selectedItemName.text = string.Empty;
         selectedItemDescription.text = string.Empty;
-        selectedItemStatName.text= string.Empty;
-        selectedItemStatValue.text= string.Empty;
+
+        selectedItemStatName.text = string.Empty;
+        selectedItemStatValue.text = string.Empty;
+
 
         useButton.SetActive(false);
         equipButton.SetActive(false);
@@ -207,25 +253,29 @@ public class Inventory : MonoBehaviour
 
     public void OnUseButton()
     {
-        //¾ÆÀÌÅÛÅ¸ÀÔÀÌ »ç¿ë °¡´ÉÇÒ °æ¿ì
-        if(selectedItem.item.type == ItemType.Consumable)
+        //ì•„ì´í…œíƒ€ìž…ì´ ì‚¬ìš© ê°€ëŠ¥í•  ê²½ìš°
+
+        if (selectedItem.item.type == ItemType.Consumable)
         {
-            for (int i = 0; i< selectedItem.item.consumables.Length; i++)
+            for (int i = 0; i < selectedItem.item.consumables.Length; i++)
+
             {
                 switch (selectedItem.item.consumables[i].tyep)
                 {
-                    //consumable Å¸ÀÔ¿¡ µû¶ó Heal°ú Eat
+                    //consumable íƒ€ìž…ì— ë”°ë¼ Healê³¼ Eat
                     case ConsumableType.Health:
                         break;
                 }
             }
         }
-        //»ç¿ëÇÑ ¾ÆÀÌÅÛ ¾ø¾Ö±â
+        //ì‚¬ìš©í•œ ì•„ì´í…œ ì—†ì• ê¸°
         RemoveSelectedItem();
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+
         {
             if (!IsOnInventory)
             {
@@ -264,13 +314,15 @@ public class Inventory : MonoBehaviour
     {
         selectedItem.quantity--;
 
-        //¾ÆÀÌÅÛÀÇ ³²Àº ¼ö·®ÀÌ 0ÀÌ µÇ¸é
-        if(selectedItem.quantity <= 0)
+        //ì•„ì´í…œì˜ ë‚¨ì€ ìˆ˜ëŸ‰ì´ 0ì´ ë˜ë©´
+
+        if (selectedItem.quantity <= 0)
+
         {
-            //¸¸¾à ¹ö¸° ¾ÆÀÌÅÛÀÌ ÀåÂøÁßÀÎ ¾ÆÀÌÅÛÀÏ °æ¿ì ÇØÁ¦½ÃÅ°±â
+            //ë§Œì•½ ë²„ë¦° ì•„ì´í…œì´ ìž¥ì°©ì¤‘ì¸ ì•„ì´í…œì¼ ê²½ìš° í•´ì œì‹œí‚¤ê¸°
             if (uidSlot[selectedItemIndex].enabled)
                 UnEquip(selectedItemIndex);
-            //¾ÆÀÌÅÛ Á¦°Å ¹× UI ¿¡¼­µµ ¾ÆÀÌÅÛ Á¤º¸ Áö¿ì±â
+            //ì•„ì´í…œ ì œê±° ë° UI ì—ì„œë„ ì•„ì´í…œ ì •ë³´ ì§€ìš°ê¸°
             selectedItem.item = null;
             ClearSelectItemWindow();
         }

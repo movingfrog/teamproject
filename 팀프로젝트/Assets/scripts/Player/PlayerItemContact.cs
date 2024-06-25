@@ -2,52 +2,46 @@ using UnityEngine;
 
 public class PlayerItemContact : MonoBehaviour
 {
-    public GameObject game;
+    public static GameObject game;
+    public GameObject Interaction;
     private bool isItemContact = false;
-    public static int gears;
-    public static int kits;
-    public static int k;
 
 
-    public void Start()
+    public void Awake()
     {
-        //Instantiate(game);
-        k = 0;
+        Interaction.gameObject.SetActive(false);
         game = GetComponent<GameObject>();
     }
 
-    public void Update()
-    {
-        if (isItemContact && Input.GetKeyDown(KeyCode.F))
-        {
-            switch (game.gameObject.tag)
-            {
-                case "kit":
-                    kits++;
-                    break;
-                case "gear":
-                    gears++;
-                    break;
-            }
-            k++;
-            Destroy(game);
-        }
-    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "kit"||collision.gameObject.tag == "gear")
+        if (collision.gameObject.CompareTag("item") || collision.gameObject.CompareTag("RustyParts"))
         {
             game = collision.gameObject;
             isItemContact = true;
+            Interaction.SetActive(true);
+            Debug.Log(game);
+        }
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("item")|| collision.gameObject.CompareTag("RustyParts"))
+        {
+            game = collision.gameObject;
+            isItemContact = true;
+            Interaction.SetActive(true);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "kit" || collision.gameObject.tag == "gear")
+        if (collision.gameObject.CompareTag("item") || collision.gameObject.CompareTag("RustyParts"))
         {
             game = null;
             isItemContact = false;
+            Interaction.SetActive(false);
+            Debug.Log(game);
         }
     }
 }
